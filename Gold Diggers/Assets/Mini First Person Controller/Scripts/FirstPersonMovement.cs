@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class FirstPersonMovement : MonoBehaviour
 {
@@ -24,8 +26,7 @@ public class FirstPersonMovement : MonoBehaviour
 
     public LayerMask breakable;
 
-    public GameObject block;
-
+    public ScoreKeep score;
 
     void Awake()
     {
@@ -73,8 +74,14 @@ public class FirstPersonMovement : MonoBehaviour
         {
             Debug.Log("Destroy block");
 
-            //Destroy block
-            block.gameObject.SetActive(false);
+            //Get the ScoreKeep component before destroyed so we know the value of object
+            GameManager.Instance.changeScore(hit.collider.GetComponent<ScoreKeep>().ScoreValue);
+
+            Destroy(hit.collider.gameObject);
+
+            //DestroyWithTag("Block");
         }
     }
+
+    
 }
