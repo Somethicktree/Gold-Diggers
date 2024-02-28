@@ -16,6 +16,10 @@ public class Player_Movement : MonoBehaviour
     Vector3 moveDirection;
     Rigidbody rb;
 
+    [Header("Dig")]
+    public float interactionLength;
+    public LayerMask breakable;
+
     private void Awake()
     {
         PlayerControls = new Player_Controls();
@@ -46,6 +50,25 @@ public class Player_Movement : MonoBehaviour
     public void OnCamMove(InputValue ctx)
     {
         camLook.moveCam(ctx.Get<Vector2>());
+    }
+
+    public void OnDig()
+    {
+        Debug.Log("Digging");
+        Ray playerRay = new Ray(transform.position, transform.forward);
+
+        RaycastHit hit;
+        if (Physics.Raycast(playerRay, out hit, interactionLength, breakable))
+        {
+            Debug.Log("Destroy block");
+
+            //Get the ScoreKeep component before destroyed so we know the value of object
+            //GameManager.Instance.changeScore(hit.collider.GetComponent<ScoreKeep>().ScoreValue);
+
+            Destroy(hit.collider.gameObject);
+
+            //DestroyWithTag("Block");
+        }
     }
 
     private void MovePlayer()

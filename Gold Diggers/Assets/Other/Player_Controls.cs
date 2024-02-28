@@ -44,6 +44,15 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dig"",
+                    ""type"": ""Button"",
+                    ""id"": ""0dd7cb4b-6b57-42b8-8ebb-ea8d6bbfd1a0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -134,6 +143,28 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""action"": ""CamMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5131a98e-20c9-4e5a-80e6-b2328d777c75"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Dig"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ec0c743-5b3a-431a-95a2-5479b082f328"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Dig"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -172,6 +203,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
         m_Movement_CamMove = m_Movement.FindAction("CamMove", throwIfNotFound: true);
+        m_Movement_Dig = m_Movement.FindAction("Dig", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -235,12 +267,14 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
     private List<IMovementActions> m_MovementActionsCallbackInterfaces = new List<IMovementActions>();
     private readonly InputAction m_Movement_Move;
     private readonly InputAction m_Movement_CamMove;
+    private readonly InputAction m_Movement_Dig;
     public struct MovementActions
     {
         private @Player_Controls m_Wrapper;
         public MovementActions(@Player_Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Movement_Move;
         public InputAction @CamMove => m_Wrapper.m_Movement_CamMove;
+        public InputAction @Dig => m_Wrapper.m_Movement_Dig;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +290,9 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
             @CamMove.started += instance.OnCamMove;
             @CamMove.performed += instance.OnCamMove;
             @CamMove.canceled += instance.OnCamMove;
+            @Dig.started += instance.OnDig;
+            @Dig.performed += instance.OnDig;
+            @Dig.canceled += instance.OnDig;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -266,6 +303,9 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
             @CamMove.started -= instance.OnCamMove;
             @CamMove.performed -= instance.OnCamMove;
             @CamMove.canceled -= instance.OnCamMove;
+            @Dig.started -= instance.OnDig;
+            @Dig.performed -= instance.OnDig;
+            @Dig.canceled -= instance.OnDig;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -305,5 +345,6 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnCamMove(InputAction.CallbackContext context);
+        void OnDig(InputAction.CallbackContext context);
     }
 }

@@ -330,6 +330,10 @@ MonoBehaviour:
   camLook: {fileID: 9031327742533049}
   moveSpeed: 5
   orientation: {fileID: 5175479269424673240}
+  interactionLength: 3
+  breakable:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &6420842996877390226
 MonoBehaviour:
   m_ObjectHideFlags: 0
