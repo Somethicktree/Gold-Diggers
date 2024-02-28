@@ -46,7 +46,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Dig"",
+                    ""name"": ""Mine"",
                     ""type"": ""Button"",
                     ""id"": ""0dd7cb4b-6b57-42b8-8ebb-ea8d6bbfd1a0"",
                     ""expectedControlType"": ""Button"",
@@ -151,7 +151,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Dig"",
+                    ""action"": ""Mine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -162,7 +162,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""Dig"",
+                    ""action"": ""Mine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -203,7 +203,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
         m_Movement_CamMove = m_Movement.FindAction("CamMove", throwIfNotFound: true);
-        m_Movement_Dig = m_Movement.FindAction("Dig", throwIfNotFound: true);
+        m_Movement_Mine = m_Movement.FindAction("Mine", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -267,14 +267,14 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
     private List<IMovementActions> m_MovementActionsCallbackInterfaces = new List<IMovementActions>();
     private readonly InputAction m_Movement_Move;
     private readonly InputAction m_Movement_CamMove;
-    private readonly InputAction m_Movement_Dig;
+    private readonly InputAction m_Movement_Mine;
     public struct MovementActions
     {
         private @Player_Controls m_Wrapper;
         public MovementActions(@Player_Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Movement_Move;
         public InputAction @CamMove => m_Wrapper.m_Movement_CamMove;
-        public InputAction @Dig => m_Wrapper.m_Movement_Dig;
+        public InputAction @Mine => m_Wrapper.m_Movement_Mine;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -290,9 +290,9 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
             @CamMove.started += instance.OnCamMove;
             @CamMove.performed += instance.OnCamMove;
             @CamMove.canceled += instance.OnCamMove;
-            @Dig.started += instance.OnDig;
-            @Dig.performed += instance.OnDig;
-            @Dig.canceled += instance.OnDig;
+            @Mine.started += instance.OnMine;
+            @Mine.performed += instance.OnMine;
+            @Mine.canceled += instance.OnMine;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -303,9 +303,9 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
             @CamMove.started -= instance.OnCamMove;
             @CamMove.performed -= instance.OnCamMove;
             @CamMove.canceled -= instance.OnCamMove;
-            @Dig.started -= instance.OnDig;
-            @Dig.performed -= instance.OnDig;
-            @Dig.canceled -= instance.OnDig;
+            @Mine.started -= instance.OnMine;
+            @Mine.performed -= instance.OnMine;
+            @Mine.canceled -= instance.OnMine;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -345,6 +345,6 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnCamMove(InputAction.CallbackContext context);
-        void OnDig(InputAction.CallbackContext context);
+        void OnMine(InputAction.CallbackContext context);
     }
 }

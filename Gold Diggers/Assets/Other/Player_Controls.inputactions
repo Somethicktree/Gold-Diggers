@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Dig",
+                    "name": "Mine",
                     "type": "Button",
                     "id": "0dd7cb4b-6b57-42b8-8ebb-ea8d6bbfd1a0",
                     "expectedControlType": "Button",
@@ -129,7 +129,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Dig",
+                    "action": "Mine",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -140,7 +140,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "Dig",
+                    "action": "Mine",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

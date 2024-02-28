@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class Player_Movement : MonoBehaviour
 {
@@ -19,6 +21,12 @@ public class Player_Movement : MonoBehaviour
     [Header("Dig")]
     public float interactionLength;
     public LayerMask breakable;
+
+    public Transform cam;
+
+    [Header("Visual Effects")]
+    public VisualEffect blockBreak;
+    public GameObject blockBreakObject;
 
     private void Awake()
     {
@@ -52,23 +60,50 @@ public class Player_Movement : MonoBehaviour
         camLook.moveCam(ctx.Get<Vector2>());
     }
 
-    public void OnDig()
+    public void OnMine()
     {
-        Debug.Log("Digging");
-        Ray playerRay = new Ray(transform.position, transform.forward);
+        Debug.Log("Mining");
+        Ray playerRay = new Ray(cam.position, cam.forward);
 
         RaycastHit hit;
         if (Physics.Raycast(playerRay, out hit, interactionLength, breakable))
         {
-            Debug.Log("Destroy block");
+            Debug.Log("Mine block");
 
             //Get the ScoreKeep component before destroyed so we know the value of object
-            //GameManager.Instance.changeScore(hit.collider.GetComponent<ScoreKeep>().ScoreValue);
+            GameManager.Instance.changeScore(hit.collider.GetComponent<ScoreKeep>().ScoreValue);
 
             Destroy(hit.collider.gameObject);
 
-            //DestroyWithTag("Block");
+            //Make a local variable of Gameobject and instantiate it at the location of the cube
+            GameObject VFX = Instantiate(blockBreakObject, hit.point, Quaternion.identity);
+
+            blockBreak = VFX.GetComponent<VisualEffect>();
+
+            //Gets the tag and checks block to send right VFX
+            if (hit.collider.CompareTag("Block"))
+            {
+                blockBreak.SendEvent("Block Break");
+            }
+            if (hit.collider.CompareTag("Iron"))
+            {
+                blockBreak.SendEvent("Iron Break");
+            }
+            if (hit.collider.CompareTag("Gold"))
+            {
+                blockBreak.SendEvent("Gold Break");
+            }
+            if (hit.collider.CompareTag("Adam"))
+            {
+                blockBreak.SendEvent("Adam Break");
+            }
+
+            //You can use a timer in a regular destroy function
+            Destroy(VFX, 1.5f);
         }
+
+        
+
     }
 
     private void MovePlayer()

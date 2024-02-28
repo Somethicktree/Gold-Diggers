@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 510635419406149144}
   m_Layer: 6
   m_Name: Adamantium
-  m_TagString: Block
+  m_TagString: Adam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

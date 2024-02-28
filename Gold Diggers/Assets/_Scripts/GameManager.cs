@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     int Score;
 
     private static GameManager instance;
+
     public static GameManager Instance
     {
         get { return instance; }
