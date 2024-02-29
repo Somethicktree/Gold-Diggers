@@ -53,6 +53,15 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeaveMine"",
+                    ""type"": ""Button"",
+                    ""id"": ""c097cddb-d563-4138-b7d5-8b28a76683fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=0.8)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -165,6 +174,28 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Mine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9cc8b9aa-ab51-4e0a-9a44-a9e50c1d5a91"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""LeaveMine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4073f384-f8fc-40fe-af9b-c75f1fbd6f11"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeaveMine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -204,6 +235,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
         m_Movement_CamMove = m_Movement.FindAction("CamMove", throwIfNotFound: true);
         m_Movement_Mine = m_Movement.FindAction("Mine", throwIfNotFound: true);
+        m_Movement_LeaveMine = m_Movement.FindAction("LeaveMine", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -268,6 +300,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Move;
     private readonly InputAction m_Movement_CamMove;
     private readonly InputAction m_Movement_Mine;
+    private readonly InputAction m_Movement_LeaveMine;
     public struct MovementActions
     {
         private @Player_Controls m_Wrapper;
@@ -275,6 +308,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Movement_Move;
         public InputAction @CamMove => m_Wrapper.m_Movement_CamMove;
         public InputAction @Mine => m_Wrapper.m_Movement_Mine;
+        public InputAction @LeaveMine => m_Wrapper.m_Movement_LeaveMine;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -293,6 +327,9 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
             @Mine.started += instance.OnMine;
             @Mine.performed += instance.OnMine;
             @Mine.canceled += instance.OnMine;
+            @LeaveMine.started += instance.OnLeaveMine;
+            @LeaveMine.performed += instance.OnLeaveMine;
+            @LeaveMine.canceled += instance.OnLeaveMine;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -306,6 +343,9 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
             @Mine.started -= instance.OnMine;
             @Mine.performed -= instance.OnMine;
             @Mine.canceled -= instance.OnMine;
+            @LeaveMine.started -= instance.OnLeaveMine;
+            @LeaveMine.performed -= instance.OnLeaveMine;
+            @LeaveMine.canceled -= instance.OnLeaveMine;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -346,5 +386,6 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnCamMove(InputAction.CallbackContext context);
         void OnMine(InputAction.CallbackContext context);
+        void OnLeaveMine(InputAction.CallbackContext context);
     }
 }

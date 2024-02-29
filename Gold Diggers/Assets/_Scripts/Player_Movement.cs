@@ -11,7 +11,9 @@ public class Player_Movement : MonoBehaviour
     public CameraLook camLook;
     public float moveSpeed = 5f;
     public Transform orientation;
-
+    public bool readyToLeave = false;
+    private bool canMove = true;
+    public GameObject dedUI;
     float horizontalInput;
     float verticalInput;
 
@@ -27,6 +29,7 @@ public class Player_Movement : MonoBehaviour
     [Header("Visual Effects")]
     public VisualEffect blockBreak;
     public GameObject blockBreakObject;
+    public GameObject hellFire;
 
     private void Awake()
     {
@@ -35,12 +38,7 @@ public class Player_Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
-        GetComponent<PlayerInput>().enabled = false;
-        GetComponent<PlayerInput>().enabled = true;
-    }
-
-    private void Update()
-    {
+        GameManager.Instance.players.Add(this);
 
     }
 
@@ -51,13 +49,25 @@ public class Player_Movement : MonoBehaviour
 
     public void OnMove(InputValue ctx)
     {
-        horizontalInput = ctx.Get<Vector2>().x;
-        verticalInput = ctx.Get<Vector2>().y;
+        if (canMove)
+        {
+            horizontalInput = ctx.Get<Vector2>().x;
+            verticalInput = ctx.Get<Vector2>().y;
+        }
     }
 
     public void OnCamMove(InputValue ctx)
     {
-        camLook.moveCam(ctx.Get<Vector2>());
+        if (canMove) 
+        { 
+            camLook.moveCam(ctx.Get<Vector2>());
+        }
+    }
+
+    public void OnLeaveMine()
+    {
+        readyToLeave = true;
+        GameManager.Instance.Leave();
     }
 
     public void OnMine()
@@ -98,6 +108,12 @@ public class Player_Movement : MonoBehaviour
                 blockBreak.SendEvent("Adam Break");
             }
 
+            if (hit.collider.CompareTag("Death"))
+            {
+                Instantiate(hellFire,hit.collider.gameObject.transform.position, Quaternion.identity);
+                dead();
+            }
+
             //You can use a timer in a regular destroy function
             Destroy(VFX, 1.5f);
         }
@@ -111,6 +127,13 @@ public class Player_Movement : MonoBehaviour
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         rb.AddForce(moveDirection.normalized * moveSpeed * 10, ForceMode.Force);
+    }
+
+    public void dead()
+    {
+        canMove = false;
+        dedUI.SetActive(true);
+        GameManager.Instance.players.Remove(this);
     }
 
     private void OnEnable()
