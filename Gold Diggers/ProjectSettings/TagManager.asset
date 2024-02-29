@@ -9,6 +9,8 @@ TagManager:
   - Gold
   - Adam
   - Death
+  - Dirt
+  - Stone
   layers:
   - Default
   - TransparentFX

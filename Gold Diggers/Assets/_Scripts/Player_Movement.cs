@@ -91,9 +91,13 @@ public class Player_Movement : MonoBehaviour
             blockBreak = VFX.GetComponent<VisualEffect>();
 
             //Gets the tag and checks block to send right VFX
-            if (hit.collider.CompareTag("Block"))
+            if (hit.collider.CompareTag("Dirt"))
             {
-                blockBreak.SendEvent("Block Break");
+                blockBreak.SendEvent("Dirt Break");
+            }
+            if (hit.collider.CompareTag("Stone"))
+            {
+                blockBreak.SendEvent("Stone Break");
             }
             if (hit.collider.CompareTag("Iron"))
             {

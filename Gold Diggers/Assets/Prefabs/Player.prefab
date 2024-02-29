@@ -572,7 +572,7 @@ MonoBehaviour:
   orientation: {fileID: 5175479269424673240}
   readyToLeave: 0
   dedUI: {fileID: 3829365899680685667}
-  interactionLength: 3
+  interactionLength: 1.5
   breakable:
     serializedVersion: 2
     m_Bits: 64
