@@ -29,7 +29,6 @@ public class Chunk
         collider = chunkObject.AddComponent<MeshCollider>();
 
         meshRenderer.material = world.material;
-        collider.sharedMesh = meshFilter.sharedMesh;
         chunkObject.transform.SetParent(world.transform);
         chunkObject.transform.position = new Vector3(coord.x * VoxelData.ChunkWidth, coord.y * VoxelData.ChunkHeight, coord.z * VoxelData.ChunkWidth);
         chunkObject.name = "Chunk " + coord.x + ", " + coord.y + ", " + coord.z;
@@ -140,6 +139,7 @@ public class Chunk
         mesh.RecalculateNormals();
 
         meshFilter.mesh = mesh;
+        collider.sharedMesh = mesh;
     }
 
     void AddTexture(int textureID)
