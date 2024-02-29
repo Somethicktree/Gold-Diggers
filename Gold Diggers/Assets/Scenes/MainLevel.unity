@@ -6117,7 +6117,7 @@ GameObject:
   - component: {fileID: 642995383}
   - component: {fileID: 642995382}
   - component: {fileID: 642995385}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -6192,7 +6192,7 @@ Transform:
   m_GameObject: {fileID: 642995381}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 32.77, y: 2, z: 20.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6221,8 +6221,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -6236,12 +6236,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
+    quality: 4
     frameInfluence: 0.1
     jitterScale: 1
     mipBias: 0
     varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    contrastAdaptiveSharpening: 1
 --- !u!1001 &666410760
 PrefabInstance:
   m_ObjectHideFlags: 0
