@@ -57,7 +57,7 @@ public class Player_Movement : MonoBehaviour
             horizontalInput = ctx.Get<Vector2>().x;
             verticalInput = ctx.Get<Vector2>().y;
 
-            anim.SetFloat("Walk", Mathf.Abs(verticalInput));
+            //anim.SetFloat("Walk", Mathf.Abs(verticalInput));
         }
     }
 
@@ -137,15 +137,28 @@ public class Player_Movement : MonoBehaviour
 
     private void MovePlayer()
     {
+        anim.SetFloat("Walk", Mathf.Abs(verticalInput));
+
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         rb.AddForce(moveDirection.normalized * moveSpeed * 10, ForceMode.Force);
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            dead();
+            anim.SetBool("Death", true);
+        }
     }
 
     public void dead()
     {
         canMove = false;
         dedUI.SetActive(true);
+
+        anim.SetBool("Death", true);
         GameManager.Instance.players.Remove(this);
     }
 
