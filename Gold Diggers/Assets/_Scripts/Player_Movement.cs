@@ -56,6 +56,8 @@ public class Player_Movement : MonoBehaviour
         {
             horizontalInput = ctx.Get<Vector2>().x;
             verticalInput = ctx.Get<Vector2>().y;
+
+            anim.SetFloat("Walk", Mathf.Abs(verticalInput));
         }
     }
 
@@ -75,7 +77,7 @@ public class Player_Movement : MonoBehaviour
 
     public void OnMine()
     {
-        anim.SetBool("Mine", true);
+        anim.SetTrigger("Mine");
 
         Debug.Log("Mining");
         Ray playerRay = new Ray(cam.position, cam.forward);
