@@ -31,6 +31,9 @@ public class Player_Movement : MonoBehaviour
     public GameObject blockBreakObject;
     public GameObject hellFire;
 
+    [Header("Animations")]
+    public Animator anim;
+
     private void Awake()
     {
         PlayerControls = new Player_Controls();
@@ -72,6 +75,8 @@ public class Player_Movement : MonoBehaviour
 
     public void OnMine()
     {
+        anim.SetBool("Mine", true);
+
         Debug.Log("Mining");
         Ray playerRay = new Ray(cam.position, cam.forward);
 
@@ -114,6 +119,8 @@ public class Player_Movement : MonoBehaviour
 
             if (hit.collider.CompareTag("Death"))
             {
+                blockBreak.SendEvent("Adam");
+
                 Instantiate(hellFire,hit.collider.gameObject.transform.position, Quaternion.identity);
                 dead();
             }
